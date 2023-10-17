@@ -58,7 +58,9 @@ class _CountdownTimerDemoState extends State<CountdownTimerDemo> {
 
   void _stopTimer() {
     setState(() {
+      _isTimerRunning = false;
       _endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 60;
+      _pauseTimer();
       _resetTimer();
     });
   }
@@ -77,6 +79,7 @@ class _CountdownTimerDemoState extends State<CountdownTimerDemo> {
           style: const TextStyle(fontSize: 48),
         ),
       ),
+
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
