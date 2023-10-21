@@ -79,7 +79,8 @@ class _ChristmasCountdownAppState extends State<ChristmasCountdownApp> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
 
-              Container(                
+              Container(     
+                width: 315,           
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
