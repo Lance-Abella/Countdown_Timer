@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors, library_private_types_in_public_api, prefer_single_quotes, prefer_const_constructors
+// ignore_for_file: use_key_in_widget_constructors, library_private_types_in_public_api, prefer_single_quotes, prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, sized_box_for_whitespace
 
 import 'dart:async';
 import 'package:flutter/material.dart';
@@ -74,49 +74,63 @@ class _ChristmasCountdownAppState extends State<ChristmasCountdownApp> {
           ],
         ),
 
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
+        body: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/bg4.jpg'),
+              fit: BoxFit.cover,
+            ),
+          ),
 
-              Container(     
-                width: 315,           
-                padding: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
-                  color: Color.fromRGBO(241, 112, 102, 1),
-                ),
-                child: Text(
-                  daysText, // Show days above hours, minutes, and seconds
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                    fontSize: 80,
+            child:Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                
+               
+                    
+                Container(  
+                  margin: EdgeInsets.only(top: 80),   
+                  width: 315,           
+                  padding: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+                    color: Color.fromRGBO(241, 112, 102, 1),
                   ),
-                ),
-              ),
-
-              Container(
-                margin: EdgeInsets.only(bottom: 120),
-                width: 315,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10)),
-                  color: Color.fromRGBO(229, 217, 215, 1),
-                ),
-                child: Center(
                   child: Text(
-                    countdownText,
+                    daysText, // Show days above hours, minutes, and seconds
                     style: TextStyle(
-                      fontWeight: FontWeight.w400,
+                      fontWeight: FontWeight.bold,
                       color: Colors.black,
-                      fontSize: 60,
+                      fontSize: 80,
                     ),
                   ),
                 ),
-              ),
-
-            ],
+        
+                Container(
+                  
+                  width: 315,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10)),
+                    color: Color.fromRGBO(229, 217, 215, 1),
+                  ),
+                  child: Center(
+                    child: Text(
+                      countdownText,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black,
+                        fontSize: 60,
+                      ),
+                    ),
+                  ),
+                ),
+        
+              ],
+            ),
           ),
+          
+           
         ),
       ),
     );
