@@ -59,6 +59,7 @@ class _ChristmasCountdownAppState extends State<ChristmasCountdownApp> {
 
         appBar: AppBar(
           elevation: 0,
+          toolbarHeight: 80,
           title: Text("Christmas Countdown"),
           backgroundColor: Colors.redAccent,
           leading: IconButton(
@@ -77,25 +78,42 @@ class _ChristmasCountdownAppState extends State<ChristmasCountdownApp> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                daysText, // Show days above hours, minutes, and seconds
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                  fontSize: 80,
+
+              Container(                
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+                  color: Color.fromRGBO(241, 112, 102, 1),
+                ),
+                child: Text(
+                  daysText, // Show days above hours, minutes, and seconds
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                    fontSize: 80,
+                  ),
                 ),
               ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                countdownText,
-                style: TextStyle(
-                  fontWeight: FontWeight.w400,
-                  color: Colors.black,
-                  fontSize: 60,
+
+              Container(
+                margin: EdgeInsets.only(bottom: 120),
+                width: 315,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10)),
+                  color: Color.fromRGBO(229, 217, 215, 1),
+                ),
+                child: Center(
+                  child: Text(
+                    countdownText,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black,
+                      fontSize: 60,
+                    ),
+                  ),
                 ),
               ),
+
             ],
           ),
         ),
