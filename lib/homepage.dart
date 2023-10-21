@@ -1,116 +1,107 @@
-// ignore_for_file: prefer_const_constructors, prefer_single_quotes, prefer_const_constructors_in_immutables, prefer_const_declarations
+// ignore_for_file: use_key_in_widget_constructors, library_private_types_in_public_api, prefer_single_quotes, prefer_const_constructors
+
 import 'dart:async';
 import 'package:flutter/material.dart';
 
-// ignore: camel_case_types
-class christmasTimer extends StatelessWidget {
-  
-  Timer? countdownTimer;
+class ChristmasCountdownApp extends StatefulWidget {
+  @override
+  _ChristmasCountdownAppState createState() => _ChristmasCountdownAppState();
+}
+
+class _ChristmasCountdownAppState extends State<ChristmasCountdownApp> {
+  late Timer countdownTimer;
   late DateTime today = DateTime.now();
-  late  DateTime christmas = DateTime(today.year, 12, 25);
-  late Duration remainingDays = christmas.difference(today);
-        
-    void startTimer(){
-    countdownTimer = Timer.periodic(Duration (seconds: 1), (_) => setCountDown());
-    } 
+  late DateTime christmas = DateTime(today.year, 12, 25);
+  late Duration remainingTime = Duration.zero;
 
-    void stopTimer(){
-       countdownTimer!.cancel();
-    }
+  String get countdownText {
+    String strDigits(int n) => n.toString().padLeft(2, '0');
+    final days = strDigits(remainingTime.inDays);
+    final hours = strDigits(remainingTime.inHours.remainder(24));
+    final minutes = strDigits(remainingTime.inMinutes.remainder(60));
+    final seconds = strDigits(remainingTime.inSeconds.remainder(60));
+    return "$hours:$minutes:$seconds"; // Only show hours, minutes, and seconds
+  }
 
-    void resetTimer(){
-      stopTimer();
-      remainingDays = christmas.difference(today);
-    }
+  String get daysText {
+    String strDigits(int n) => n.toString().padLeft(2, '0');
+    final days = strDigits(remainingTime.inDays);
+    return "$days Days";
+  }
 
-    void setCountDown(){
-      final reduceSecondsBy = 1;
-      final seconds = remainingDays.inSeconds - reduceSecondsBy;
-        if(seconds < 0){
-          countdownTimer!.cancel();
-        }
-        else{
-          remainingDays = Duration(seconds: seconds);
-        } 
+  void setCountdown() {
+    setState(() {
+      remainingTime = christmas.difference(DateTime.now());
+    });
+
+    if (remainingTime.isNegative) {
+      countdownTimer.cancel();
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    countdownTimer = Timer.periodic(Duration(seconds: 1), (_) => setCountdown());
+  }
+
+  @override
+  void dispose() {
+    countdownTimer.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    String strDigits(int n) => n.toString().padLeft(2, '0');
-    final days = strDigits(remainingDays.inDays);
-    final hours = strDigits(remainingDays.inHours.remainder(24));
-    final minutes = strDigits(remainingDays.inMinutes.remainder(60));
-    final seconds = strDigits(remainingDays.inSeconds.remainder(60));
-    
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+
         appBar: AppBar(
           elevation: 0,
           title: Text("Christmas Countdown"),
           backgroundColor: Colors.redAccent,
-          leading: IconButton(onPressed: () {
-            
-          }, icon: Icon(Icons.menu)),
-          actions: [IconButton(onPressed: (){}, icon: Icon(Icons.exit_to_app_sharp))],
+          leading: IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.menu),
+          ),
+          actions: [
+            IconButton(
+              onPressed: () {},
+              icon: Icon(Icons.exit_to_app_sharp),
+            )
+          ],
         ),
+
         body: Center(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
-                height: 50,
-              ),
-
               Text(
-                "$hours: $minutes:$seconds",
+                daysText, // Show days above hours, minutes, and seconds
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
-                  fontSize: 50,
+                  fontSize: 80,
                 ),
               ),
-
-              SizedBox(height: 20),
-              
-              ElevatedButton(
-                onPressed: startTimer, 
-                child: Text(
-                  "Start",
-                  style: TextStyle(
-                    fontSize: 30,
-                  ),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                countdownText,
+                style: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  color: Colors.black,
+                  fontSize: 60,
                 ),
-                ),
-
-              ElevatedButton(
-                onPressed: (){
-                  if(countdownTimer == null || countdownTimer!.isActive){
-                    stopTimer();
-                  }
-                }, 
-                child: Text(
-                  "Stop",
-                  style: TextStyle(
-                    fontSize: 30,
-                  ),
-                ),
-                ),
-
-              ElevatedButton(
-                onPressed: (){
-                  resetTimer();
-                }, 
-                child: Text(
-                  "Reset",
-                  style: TextStyle(
-                    fontSize: 30,
-                  ),
-                ),
-                ),
-          ],
+              ),
+            ],
           ),
         ),
       ),
     );
   }
 }
+
+
